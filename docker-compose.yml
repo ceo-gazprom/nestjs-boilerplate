@@ -1,0 +1,65 @@
+version: '3.5'
+
+services:
+  api:
+    container_name: kinobu_api_dev
+    env_file: .env
+    build:
+      context: .
+      dockerfile: ./dev.dockerfile
+    ports:
+      - "3010:3010"
+    volumes:
+      - .:/usr/src/app
+    restart: always
+    command: npm run start:dev
+    links:
+      - postgres:postgres
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    container_name: postgres_dev
+    image: postgres
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  redis:
+    container_name: redis_dev
+    image: "redis:alpine"
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    env_file: ./.env
+
+  minio:
+    container_name: minio_dev
+    image: minio/minio
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./storage/minio:/data
+    environment:
+      MINIO_ACCESS_KEY: minio_access_key
+      MINIO_SECRET_KEY: minio_secret_key
+    command: server --address 0.0.0.0:9000 /data
+
+  mailhog:
+    container_name: mailhog_dev
+    image: mailhog/mailhog
+    logging:
+      driver: 'none'  # disable saving logs
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+
+volumes:
+  postgres:
