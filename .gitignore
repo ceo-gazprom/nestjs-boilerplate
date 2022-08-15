@@ -103,8 +103,8 @@ dist
 # TernJS port file
 .tern-port
 
-# VSCODE files
-.vscode
+# # VSCODE files
+# .vscode
 
 # Minio cash files
 /storage/
