@@ -20,6 +20,20 @@ export function setupSwagger(
   const options = new DocumentBuilder()
     .setTitle(name)
     .setVersion(version)
+    .addBearerAuth(
+      {
+        name: 'Authorization',
+        description: 'Please enter token in following format: Bearer <JWT>',
+        bearerFormat: 'Bearer',
+        scheme: 'Bearer',
+        type: 'http',
+        in: 'Header',
+      },
+      /**
+       * This name here is important for matching up with @ApiBearerAuth() in your controller
+       */
+      'access-token',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, options);

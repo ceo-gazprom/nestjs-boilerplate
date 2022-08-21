@@ -1,12 +1,13 @@
 import type { DeleteResult, UpdateResult, SelectQueryBuilder } from 'typeorm';
 import type { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
+import type { WithoutAbstractEntityKeys } from '@core/types';
 import type { IPaginationFilters } from './pagination-filters.interface';
 import type { IPagination } from './pagination.interface';
 
 export interface IAbstractRepository<Entity> {
   queryBuilder(alias?: string | undefined): SelectQueryBuilder<Entity>;
 
-  create(data: Entity | any): Promise<Entity>;
+  create(data: WithoutAbstractEntityKeys<Entity>): Promise<Entity>;
 
   updateById(
     id: string,

@@ -7,8 +7,12 @@ import type {
   DeepPartial,
 } from 'typeorm';
 import type { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
-import type { IPagination, IPaginationFilters } from './interfaces';
-import type { IAbstractRepository } from './interfaces';
+import type { WithoutAbstractEntityKeys } from '@core/types';
+import type {
+  IAbstractRepository,
+  IPagination,
+  IPaginationFilters,
+} from './interfaces';
 
 /**
  * Abstract Repository
@@ -25,11 +29,11 @@ export abstract class AbstractRepository<Entity>
   /**
    * Number of rows for pagination by default
    */
-  private readonly defaultTake = 10;
+  public readonly defaultTake = 10;
   /**
    * Indent rows when sorting in default pagination
    */
-  private readonly defaultSkip = 0;
+  public readonly defaultSkip = 0;
 
   constructor(private entity: Repository<Entity>) {}
 

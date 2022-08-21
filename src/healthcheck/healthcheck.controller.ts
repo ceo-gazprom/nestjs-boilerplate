@@ -1,9 +1,11 @@
 import { Controller, Get } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import type { IHealthCheckResponse } from './interfaces';
 
 @Controller({
   path: 'healthcheck',
 })
+@ApiTags('Monitoring')
 export class HealthcheckController {
   @Get()
   public getStatus(): IHealthCheckResponse {

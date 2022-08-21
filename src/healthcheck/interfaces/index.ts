@@ -1,1 +1,1 @@
-export type { IHealthCheckResponse } from './health-check.response.interface';
+export type { IHealthCheckResponse } from './healthcheck.response.interface';
