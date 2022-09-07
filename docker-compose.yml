@@ -1,8 +1,8 @@
 version: '3.5'
 
 services:
-  api:
-    container_name: kinobu_api_dev
+  service:
+    container_name: nestjs_boilerplate_dev
     env_file: .env
     build:
       context: .
